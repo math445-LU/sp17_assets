@@ -1,0 +1,325 @@
+\documentclass[10pt]{beamer}
+
+\usetheme{metropolis}
+
+% Comment out for slides
+%\usepackage{pgfpages} 	
+%\pgfpagesuselayout{4 on 1} 
+
+\usepackage{booktabs}
+\usepackage[scale=2]{ccicons}
+
+\usepackage{pgfplots}
+\usepgfplotslibrary{dateplot}
+
+\usepackage{xspace}
+\newcommand{\themename}{\textbf{\textsc{metropolis}}\xspace}
+
+\usepackage{color}
+\definecolor{LUBlue}{RGB}{0,74,136}
+%
+\usecolortheme[named=LUBlue]{structure} 
+%
+%\setbeamercolor*{palette primary}{fg=white, bg=LUBlue}%gray!15!white}
+%
+%\setbeamercolor{titlelike}{parent=palette primary}
+\setbeamercolor{frametitle}{bg=LUBlue}
+%\setbeamercolor{frametitle right}{bg=gray!60!white}
+
+\graphicspath{{./figures/}}
+\usepackage{booktabs}% http://ctan.org/pkg/booktabs
+\usepackage{array}% http://ctan.org/pkg/array
+\newcolumntype{M}{>{\centering\arraybackslash}m{\dimexpr.05\linewidth-2\tabcolsep}}
+
+\title{This is Math 445: Statistical Theory}
+%\subtitle{To de-trend, or not to de-trend}
+\date{}
+\author{Math 445, Spring 2017}
+\titlegraphic{\hfill\includegraphics[height=1.5cm]{LULogo}}
+
+\usepackage[makeroom]{cancel}
+
+\begin{document}
+
+\maketitle
+
+%\begin{frame}{Overview}
+%  \setbeamertemplate{section in toc}[sections numbered]
+%  \tableofcontents[hideallsubsections]
+%\end{frame}
+
+\section{Overview: Statistical Inference}
+
+
+% --------------------------------------------------- Slide --
+\begin{frame}[fragile]{3 Prongs of Statistics}
+
+\begin{enumerate}
+\item Design
+
+The design of experiments and collection of data to more efficiently/correctly address scientific questions
+
+\item[]
+
+\item Exploratory statistics
+
+Understand the major features of and detect patterns in data
+
+\item[]
+
+\item Inferential statistics
+
+Account for randomness, variability, and bias in a sample in order to draw reasonable and correct conclusions about a population
+
+\end{enumerate}
+
+
+\end{frame}
+
+
+% --------------------------------------------------- Slide --
+\begin{frame}[fragile]{Statistics vs. Probability}
+
+\begin{alertblock}{Probability (Math 240)}
+We learned how to calculate the probability of seeing a result (data) given a specific probability model (e.g., a specific distribution)
+\end{alertblock}
+
+\vfill
+
+\begin{alertblock}{Statistics (Math 445)}
+We will learn how to make statements about the underlying probability models given the data we see
+\end{alertblock}
+
+\end{frame}
+
+% --------------------------------------------------- Slide --
+\begin{frame}[fragile]{Example: Spies vs. Statisticians}
+
+During WWII, the Allies wanted to determine production rates of tanks (and airplanes, missiles, etc.)
+
+\vfill
+
+\begin{block}{Spies}
+Gathered intelligence (intercepted messages, interrogated of prisoners, etc.) and made the following estimates:
+\begin{itemize}
+\item[] June 1940: 1000
+\item[] June 1941: 1550
+\item[] August 1942: 1550
+\end{itemize}
+
+\end{block}
+
+
+\end{frame}
+
+% --------------------------------------------------- Slide --
+\begin{frame}[fragile]{Example: Spies vs. Statisticians}
+
+\begin{block}{Statisticians}
+\begin{itemize}
+\item The Allies had a sample of serial numbers (via capture, photography, etc.), $X_1, X_2, \ldots, X_n$, and there were $N$ produced.
+\item Allied statisticians needed to devise an \alert{estimator} to obtain $N$
+\item Ultimately, they used
+
+$$ \widehat{N} = X_{\text{max}} + \dfrac{X_{\text{max}}}{n} - 1 $$
+
+to get estimates
+
+\item[] June 1940: 169
+\item[] June 1941: 244
+\item[] August 1942: 327
+
+\end{itemize}
+\end{block}
+
+\end{frame}
+
+% --------------------------------------------------- Slide --
+\begin{frame}[fragile]{Example: Spies vs. Statisticians}
+
+After the war, the Allies discovered documents revealing the true number of tanks produced:
+
+\bigskip
+
+\centerline{
+\begin{tabular}{l r r r}\hline
+Month & Truth & Statisticians & Spies\\ \hline
+June 1940    & 122 & 169 & 1000\\ 
+June 1941    & 271 & 244 & 1550\\
+August 1942 & 342 & 327 & 1550\\ \hline
+\end{tabular}
+}
+
+
+\end{frame}
+
+% --------------------------------------------------- Slide --
+\begin{frame}[fragile]{Statistical Inference}
+
+\begin{block}{Statistical inference}
+``A statistical inference is a procedure that produces a probabilistic statement about some or all parts of a statistical model'' (Morris and DeGroot, 378).
+\end{block}
+
+\vfill
+
+\begin{block}{Statistical model}
+A statistical model consists of
+
+\begin{itemize}
+\item a collection of random variables to describe observable data,
+\item the possible joint distribution(s) of the random variables,
+\item and the parameters, $\boldsymbol \theta$, that define those distributions
+\end{itemize}
+
+(Morris and DeGroot, 377)
+
+\end{block}
+
+\end{frame}
+
+
+% --------------------------------------------------- Slide --
+\begin{frame}[fragile]{Types of Inference in Math 445}
+
+
+\begin{alertblock}{Nonparametric}
+
+``The basic idea of nonparametric inference is to use data to infer an unknown quantity while making as few assumptions as possible. Usually, this means using statistical models that are infinite-dimensional.''  (Wasserman, 2006)
+
+\end{alertblock}
+
+\vfill 
+
+\begin{alertblock}{Parametric}
+
+A parametric inference uses models that consist of a set of distributions/densities that can be parameterized by a finite number of parameters.
+
+\end{alertblock}
+
+\end{frame}
+
+% --------------------------------------------------- Slide --
+\begin{frame}[fragile]{Types of Inference in Math 445}
+
+
+\begin{alertblock}{Frequentist Paradigm}
+
+\begin{itemize}
+\item Probability refers to limiting relative frequencies $\Longrightarrow$ ``objective''
+\item Parameters are fixed, unknown constants
+\item Statistical procedures are designed to have well-defined long-run frequency properties
+\end{itemize}
+
+\end{alertblock}
+
+\vfill
+
+\begin{alertblock}{Bayesian Paradigm}
+
+\begin{itemize}
+\item Probability describes a degree of belief $\Longrightarrow$ ``subjective''
+\item Parameters are random variables because they are quantities about which we are uncertain
+\item Inferences for a parameter are made by producing a probability distribution for it 
+\end{itemize}
+
+\end{alertblock}
+
+
+
+\end{frame}
+
+% --------------------------------------------------- Slide --
+\begin{frame}[fragile]{Tentative Schedule}
+
+\begin{center}
+\begin{tabular}{l l l}\hline
+\bf Topic & \bf Chapters & \bf Approx. Duration\\ \hline
+Exploratory Data Analysis & 1--2 & 1 week \\
+Nonparametric inference & 3--5 & 3 weeks \\
+Frequentist inference & 6--8 & 5 weeks \\
+Bayesian inference & 10, supplements & 1 week \\ \hline
+\end{tabular}
+\end{center}
+
+\end{frame}
+
+% ---------------------------------------------------
+% ---------------------------------------------------
+
+\section{Course Logistics}
+
+% --------------------------------------------------- Slide --
+
+
+\plain{math445-lu.github.io/sp17/}
+
+\begin{frame}[fragile]{My Info}
+
+\begin{itemize}
+\item email: adam.m.loy@lawrence.edu
+\item[]
+\item Office: Briggs 410
+\item[]
+\item Office hours:
+	\begin{itemize}
+	\item M 3:00-4:30 p.m.
+	\item T 2:00-4:00 p.m.
+	\item W 8:30-9:30 a.m.
+	\item F 1:50-3:00 p.m.
+	\item and by appointment
+	\end{itemize}
+
+\end{itemize}
+
+
+\end{frame}
+
+% --------------------------------------------------- Slide --
+\begin{frame}[fragile]{Required Materials}
+
+\begin{itemize}
+\item Textbook:
+
+ \emph{Mathematical Statistics with Resampling and R}, Laura M. Chihara and Tim C. Hesterberg, 2011, Wiley, ISBN 978-1-118-02985-5.
+
+\item[]
+\item[]
+
+\item Access to R
+	\begin{itemize}
+	\item You can download your own version of R and RStudio
+	\item You can access our RStudio server: \url{rstudio.lawrence.edu}
+	\end{itemize}
+
+\end{itemize}
+
+
+\end{frame}
+
+% --------------------------------------------------- Slide --
+\begin{frame}[fragile]{Grading}
+
+\begin{itemize}
+\item Homework (40\%)
+	\begin{itemize}
+	\item Due (most) Wednesdays by 4:30 pm
+	\item No late work accepted without a valid excuse
+	\item Mix of theoretical and applied problems
+	\item Most applications will use R	
+	\end{itemize}
+
+
+\item[]
+
+\item Exams (60\%)
+	\begin{itemize}
+	\item Two exams (20\% each) and a final (20\%)
+	\item Exams tentatively scheduled for Wednesday 4/19 and Wednesday 5/10, outside of class
+	\item Final will be held on Monday, June 5 from 11:30 a.m. to 2:00 p.m.	\end{itemize}
+
+\end{itemize}
+
+
+\end{frame}
+
+\end{document}
