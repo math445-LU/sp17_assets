@@ -1,0 +1,15 @@
+\frametitle{Empirical CDFs}
+
+\begin{knitrout}\small
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{ggplot}\hlstd{(}\hlkwc{data} \hlstd{= flights,} \hlkwc{mapping} \hlstd{=} \hlkwd{aes}\hlstd{(}\hlkwc{x} \hlstd{= Delay))} \hlopt{+}
+  \hlkwd{stat_ecdf}\hlstd{(}\hlkwc{geom} \hlstd{=} \hlstr{"step"}\hlstd{)} \hlopt{+}
+  \hlkwd{xlab}\hlstd{(}\hlstr{"Delay (min)"}\hlstd{)} \hlopt{+}
+  \hlkwd{ylab}\hlstd{(}\hlstr{"F(x)"}\hlstd{)}
+\end{alltt}
+\end{kframe}
+\includegraphics[width=3in,height=2in]{figure/unnamed-chunk-22-1}
+
+\end{knitrout}
+

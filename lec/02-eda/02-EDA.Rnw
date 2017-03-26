@@ -1,0 +1,479 @@
+\documentclass[10pt]{beamer}
+
+\usetheme{metropolis}
+
+% Comment out for slides
+% \usepackage{pgfpages} 	
+% \pgfpagesuselayout{4 on 1} 	
+
+\usepackage{booktabs}
+\usepackage[scale=2]{ccicons}
+
+\usepackage{pgfplots}
+\usepgfplotslibrary{dateplot}
+
+\usepackage{xspace}
+\newcommand{\themename}{\textbf{\textsc{metropolis}}\xspace}
+
+\usepackage{color}
+\definecolor{LUBlue}{RGB}{0,74,136}
+%
+\usecolortheme[named=LUBlue]{structure} 
+%
+%\setbeamercolor*{palette primary}{fg=white, bg=LUBlue}%gray!15!white}
+%
+%\setbeamercolor{titlelike}{parent=palette primary}
+\setbeamercolor{frametitle}{bg=LUBlue}
+%\setbeamercolor{frametitle right}{bg=gray!60!white}
+
+\graphicspath{{./figures/}}
+\usepackage{booktabs}% http://ctan.org/pkg/booktabs
+\usepackage{array}% http://ctan.org/pkg/array
+\newcolumntype{M}{>{\centering\arraybackslash}m{\dimexpr.05\linewidth-2\tabcolsep}}
+
+\title{Exploratory Data Analysis}
+\subtitle{Part 1: Tidy data + Univariate graphics}
+\date{}
+\author{Math 445, Spring 2017}
+\titlegraphic{\hfill\includegraphics[height=1.5cm]{LULogo}}
+
+\usepackage[makeroom]{cancel}
+
+\begin{document}
+
+<<include=FALSE>>=
+require(knitr)
+opts_chunk$set(
+  dev = 'pdf',
+  tidy=TRUE,     # display code as typed
+  size="small"    # slightly smaller font for code
+)
+@
+
+<<include=FALSE>>=
+library(ggplot2)
+@
+
+
+\maketitle
+
+%\begin{frame}{Overview}
+%  \setbeamertemplate{section in toc}[sections numbered]
+%  \tableofcontents[hideallsubsections]
+%\end{frame}
+
+% ---------------------------------------------------
+% ---------------------------------------------------
+\section{Loading Data into R}
+
+% --------------------------------------------------- Slide --
+
+\begin{frame}[fragile]{Flight Delays}
+
+Overview: All departures from LaGuardia during May and June 2009
+
+\bigskip
+
+\begin{tabular}{l l} \hline
+Variable name & Description\\ \hline
+Carrier     & UA = United Airlines, AA = American Airlines\\
+FlightNo    & Flight number\\
+Destination & Destination airport code\\
+DepartTime  & Schedule departure time (4 hr intervals)\\
+Day         & Day of the week\\
+Month       & May or June\\
+FlightLength & Duration of flight (min.)\\
+Delay       & Minutes flight delayed (neg. for early dept.)\\
+Delayed30   & Was the flight delayed at least 30 min?\\
+\hline
+\end{tabular}
+\end{frame}
+
+% --------------------------------------------------- Slide --
+
+\begin{frame}[fragile]{read.table}
+
+\begin{itemize}
+\item  If you already have a data set saved, then you can simply load
+the data set into R.
+\item[]
+\item  Example: If you wanted to read in the \texttt{FlightDelays.csv} data set, then run the command (substituting the approriate file path)
+
+<<size = "scriptsize">>=
+flights <- read.table(file = "../../data/FlightDelays.csv", sep = ",", header = TRUE)
+@
+\item[]
+\item You can use \texttt{file.choose()} to get a pop-up window for file selection
+
+<<eval=FALSE, size = "scriptsize">>=
+flights <- read.table(file = file.choose(), sep = ",", header = TRUE)
+@
+
+WARNING: This will not work in an R markdown file.
+
+\end{itemize}
+
+\end{frame}
+
+
+% --------------------------------------------------- Slide --
+\begin{frame}[fragile]{read.table}
+
+\begin{itemize}
+\item \texttt{read.table} is our workhorse function, and can read in numerous file types
+
+\item[]
+
+\item for different file types you will need to specify different field separator characters:\\
+
+\item[]
+
+\begin{tabular}{l  l} \hline
+  Separator    & Description\\ \hline
+  \texttt{sep = " "}  & white space separated\\
+  \verb|sep = "\t"| & tab separated\\
+  \texttt{sep = ","}  & comma separated files (.csv) \\ \hline
+\end{tabular}
+
+\item[]
+
+\item Use \texttt{header = TRUE} if there are column names
+
+\item[]
+
+\item \texttt{read.csv} is a shortcut to \texttt{read.table} where \texttt{sep = ","} and \texttt{header = TRUE}
+\end{itemize}
+
+\end{frame}
+
+
+% --------------------------------------------------- Slide --
+\begin{frame}[fragile]{Did it work?}
+
+The following commands provide useful ways to check that the data loaded correctly
+
+<<eval=FALSE>>=
+dim(flights)
+nrow(flights)
+ncol(flights)
+str(flights)
+head(flights)
+@
+
+\end{frame}
+
+% --------------------------------------------------- Slide --
+\begin{frame}[fragile]{Textbook data}
+
+The \texttt{resampledata} R package contains the data sets discussed in the textbook.
+
+<<eval=FALSE>>=
+# Install (only do once)
+install.packages("resampledata")
+
+# Load
+library(resampledata)
+@
+
+
+\end{frame}
+
+% ---------------------------------------------------
+% ---------------------------------------------------
+\section{Tidy Data}
+
+
+% --------------------------------------------------- Slide --
+\begin{frame}[fragile]{Data tables}
+
+\begin{itemize}
+\item A row is always a \alert{case}
+\item A column is always a \alert{variable}
+\end{itemize}
+
+<<include=FALSE>>=
+options(width = 120)
+@
+
+
+<<size="scriptsize">>=
+head(flights)
+@
+
+\end{frame}
+
+% --------------------------------------------------- Slide --
+\begin{frame}[fragile]{Cases}
+
+A case contains all values measured on the same unit across attributes (variables)
+
+<<size="scriptsize">>=
+head(flights)
+@
+
+\end{frame}
+
+% --------------------------------------------------- Slide --
+\begin{frame}[fragile]{Variables}
+
+A variable contains all values that measure the same underlying attribute across cases
+
+\begin{itemize}
+\item categorical
+\item quantitative
+\end{itemize}
+
+<<size="scriptsize">>=
+head(flights)
+@
+
+\end{frame}
+
+% --------------------------------------------------- Slide --
+\begin{frame}[fragile]{Tidy data}
+
+\begin{enumerate}
+\item Each variable forms a column
+\item Each case forms a row
+\item Each type of case (observational unit) forms a table
+\end{enumerate}
+
+<<size="scriptsize">>=
+head(flights)
+@
+
+\end{frame}
+
+% ---------------------------------------------------
+% ---------------------------------------------------
+\section{Plotting data}
+
+% --------------------------------------------------- Slide --
+\begin{frame}[fragile]{ggplot2}
+
+\begin{itemize}
+\item I prefer using \texttt{ggplot2} graphics to the rather \texttt{base} graphics system used in the textbook.
+
+\item If you are using your personal computer, you will need to install
+this package before you use it the first time
+
+<<eval=FALSE>>=
+install.packages("ggplot2")
+@
+
+\item You will need to load this package at the beginning of each R session:
+
+<<eval=FALSE>>=
+library(ggplot2)
+@
+
+\end{itemize}
+
+\end{frame}
+
+% --------------------------------------------------- Slide --
+\begin{frame}[fragile]{The layered grammar of graphics}
+
+\begin{itemize}
+\item \texttt{ggplot2} implements a layered grammar of graphics providing a unified approach to building plots in R
+
+\item[]
+
+\item There is a bit of a learning curve, but the logic behind it is very intuitive
+
+$$\text{base layer} + \text{geometry} + \text{options}$$
+
+\item[]
+\item It's easiest to learn by example
+
+\end{itemize}
+
+
+\end{frame}
+
+
+% --------------------------------------------------- Slide --
+\begin{frame}[fragile]{Basic univariate graphics}
+
+\begin{tabular}{ll} \hline
+Variable type & Plot suggestions\\\hline
+Categorical   & Bar chart\\
+              & \\
+Quantitative  & Histogram\\
+              & Boxplot\\
+              & Kernel density estimate\\ 
+              & Quantile-quantile plots\\
+              & Empirical CDF\\
+\hline
+\end{tabular}
+
+\end{frame}
+
+% --------------------------------------------------- Slide --
+\begin{frame}[fragile]{Bar charts}
+
+Basic bar chart
+
+<<tidy=FALSE, fig.height=2, fig.width=3>>=
+ggplot(data = flights, mapping = aes(x = Carrier)) + 
+  geom_bar()
+@
+
+\end{frame}
+
+
+% --------------------------------------------------- Slide --
+\begin{frame}[fragile]{Bar charts}
+
+You can also add options
+
+<<tidy=FALSE, fig.height=2, fig.width=3>>=
+ggplot(data = flights, mapping = aes(x = Carrier, fill = Carrier)) + 
+  geom_bar() + 
+  labs(title = "Bar chart of flights by carrier")
+@
+
+\end{frame}
+
+% --------------------------------------------------- Slide --
+\begin{frame}[fragile]{Histograms}
+
+
+<<tidy=FALSE, fig.height=2, fig.width=3, message=FALSE>>=
+ggplot(data = flights, mapping = aes(x = FlightLength)) + 
+  geom_histogram() + 
+  labs(x = "Flight length (min)")
+@
+
+\end{frame}
+
+\plain{Always experiment with the bin width}
+
+% --------------------------------------------------- Slide --
+\begin{frame}[fragile]{Histograms}
+
+<<tidy=FALSE, fig.height=2, fig.width=3, message=FALSE>>=
+ggplot(data = flights, mapping = aes(x = FlightLength), binwidth = 30) + 
+  geom_histogram() + 
+  labs(x = "Flight length (min)")
+@
+
+\end{frame}
+
+% --------------------------------------------------- Slide --
+\begin{frame}[fragile]{Kernel density estimates}
+
+<<tidy=FALSE, fig.height=2, fig.width=3>>=
+ggplot(data = flights, mapping = aes(x = FlightLength)) + 
+  geom_density() + 
+  labs(x = "Flight length (min)")
+@
+
+\end{frame}
+
+% --------------------------------------------------- Slide --
+\begin{frame}[fragile]{Histograms + Kernel densities}
+
+<<tidy=FALSE, fig.height=2, fig.width=3, size = 'scriptsize'>>=
+ggplot(data = flights) + 
+  geom_histogram(mapping = aes(x = FlightLength, y = ..density..), binwidth = 15) +
+  geom_density(mapping = aes(x = FlightLength), colour = "orange") + 
+  labs(x = "Flight length (min)")
+@
+
+\end{frame}
+
+% --------------------------------------------------- Slide --
+\begin{frame}[fragile]{Boxplots}
+
+<<tidy=FALSE, fig.height=2, fig.width=3, size = "scriptsize">>=
+ggplot(data = flights, mapping = aes(x = "dummy", y = FlightLength)) +
+  geom_boxplot() +
+  labs(x = NULL, y = "Flight time (min)") +
+  scale_x_discrete(breaks = NULL) +
+  coord_flip()
+@
+
+\end{frame}
+
+% --------------------------------------------------- Slide --
+\begin{frame}[fragile]{Quantile-quantile plots}
+
+\begin{columns}[T,onlytextwidth]
+    \column{0.45\textwidth}
+    
+\begin{itemize}
+\item Quantile-quantile (Q-Q) plots compare two sets of quantiles
+	\begin{itemize}
+	\item Sample vs. sample
+	\item Sample vs. theoretical quantiles
+  \end{itemize}
+
+\item Most common use is for comparison to normality
+\end{itemize}
+
+\column{0.45\textwidth}
+\vspace{-1cm}
+\hspace{1pc}
+  \includegraphics[width=1.05\linewidth]{figs/qqplot1.pdf}
+
+\end{columns}
+\end{frame}
+
+% --------------------------------------------------- Slide --
+\begin{frame}[fragile]{Interpreting Q-Q plots}
+
+\begin{columns}[T,onlytextwidth]
+    \column{0.45\textwidth}
+
+\begin{itemize}
+\item Deviations from the diagonal indicate differences between the distributions
+\item[]
+\item[]
+\item[]
+\end{itemize}
+
+\vfill
+
+\column{0.45\textwidth}
+\vspace{-1cm}
+\hspace{1pc}
+\includegraphics[width=1.05\linewidth]<1>{figs/example-left-skew.pdf}
+\includegraphics[width=1.05\linewidth]<2>{figs/example-right-skew.pdf}
+\includegraphics[width=1.05\linewidth]<3>{figs/example-heavy-tail.pdf}
+\end{columns}
+\end{frame}
+
+
+% --------------------------------------------------- Slide --
+\begin{frame}[fragile]{Normal Q-Q plots}
+
+<<tidy=FALSE, out.height='2in', out.width='3in', fig.height=4, fig.width=6>>=
+ggplot(data = flights, mapping = aes(sample = Delay)) +
+  geom_point(stat = "qq")
+@
+
+\end{frame}
+
+% --------------------------------------------------- Slide --
+\begin{frame}[fragile]{Empirical CDFs}
+
+For a sample consisting of $n$ observations $x_1, x_2, \ldots, x_n$, the ECDF is defined as
+
+$$ \widehat{F} (x) = \dfrac{1}{n} \sum_{i=1}^n I_{(x_i \le x)} $$
+
+\end{frame}
+
+% --------------------------------------------------- Slide --
+\begin{frame}[fragile]{Empirical CDFs}
+
+<<tidy=FALSE, out.height='2in', out.width='3in', fig.height=3, fig.width=5, size = "small">>=
+ggplot(data = flights, mapping = aes(x = Delay)) + 
+  stat_ecdf(geom = "step") + 
+  xlab("Delay (min)") +
+  ylab("F(x)")
+@
+
+\end{frame}
+
+\end{document}
