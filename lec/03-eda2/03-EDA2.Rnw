@@ -1,0 +1,322 @@
+\documentclass[10pt]{beamer}
+
+\usetheme{metropolis}
+
+% Comment out for slides
+% \usepackage{pgfpages}
+% \pgfpagesuselayout{4 on 1}
+
+
+\usepackage{booktabs}
+\usepackage[scale=2]{ccicons}
+
+\usepackage{pgfplots}
+\usepgfplotslibrary{dateplot}
+
+\usepackage{xspace}
+\newcommand{\themename}{\textbf{\textsc{metropolis}}\xspace}
+
+\usepackage{color}
+\definecolor{LUBlue}{RGB}{0,74,136}
+%
+\usecolortheme[named=LUBlue]{structure} 
+%
+%\setbeamercolor*{palette primary}{fg=white, bg=LUBlue}%gray!15!white}
+%
+%\setbeamercolor{titlelike}{parent=palette primary}
+\setbeamercolor{frametitle}{bg=LUBlue}
+%\setbeamercolor{frametitle right}{bg=gray!60!white}
+
+\graphicspath{{./figures/}}
+\usepackage{booktabs}% http://ctan.org/pkg/booktabs
+\usepackage{array}% http://ctan.org/pkg/array
+\newcolumntype{M}{>{\centering\arraybackslash}m{\dimexpr.05\linewidth-2\tabcolsep}}
+
+\title{Exploratory Data Analysis}
+\subtitle{Part 2: Multivariate graphics + summary statistics}
+\date{}
+\author{Math 445, Spring 2017}
+\titlegraphic{\hfill\includegraphics[height=1.5cm]{LULogo}}
+
+\usepackage[makeroom]{cancel}
+
+\begin{document}
+
+<<include=FALSE>>=
+require(knitr)
+opts_chunk$set(
+  dev = 'pdf',
+  tidy=TRUE,     # display code as typed
+  size="small"    # slightly smaller font for code
+)
+@
+
+<<include=FALSE>>=
+library(ggplot2)
+@
+
+
+\maketitle
+
+%\begin{frame}{Overview}
+%  \setbeamertemplate{section in toc}[sections numbered]
+%  \tableofcontents[hideallsubsections]
+%\end{frame}
+
+% ---------------------------------------------------
+% ---------------------------------------------------
+\section{Plotting multiple variables}
+
+% --------------------------------------------------- Slide --
+\begin{frame}[fragile]{Basic bivariate graphics}
+
+\begin{tabular}{ll} \hline
+Variable type & Plot suggestions\\\hline
+Quantitative vs. quantitative  & Scatterplot\\
+    & \\
+Quantitative vs. categorical   & Side-by-side boxplots\\
+              & Facetted histograms/densities\\
+\hline
+\end{tabular}
+
+\end{frame}
+
+% --------------------------------------------------- Slide --
+\begin{frame}[fragile]{Data: 2012 Olympic Athletes}
+
+<<eval=FALSE, size = 'scriptsize'>>=
+oly12 <- read.table("https://raw.githubusercontent.com/math445-LU/2016/master/data/oly12.csv", sep = ",", header = TRUE)
+oly12$Sport <- abbreviate(oly12$Sport, 12)
+str(oly12)
+@
+
+
+<<echo=FALSE, size = 'scriptsize'>>=
+data(oly12, package = "VGAMdata")
+oly12$Sport <- abbreviate(oly12$Sport, 12)
+str(oly12)
+@
+
+\end{frame}
+
+
+% --------------------------------------------------- Slide --
+\begin{frame}[fragile]{Scatterplots}
+<<tidy = FALSE, fig.height = 4, fig.width = 4, out.height='2.5in', out.width='2.5in', message=FALSE, warning=FALSE>>=
+ggplot(data = oly12, mapping = aes(x = Height, y = Weight)) +
+ geom_point()
+@
+\end{frame}
+
+% --------------------------------------------------- Slide --
+\begin{frame}[fragile]{Scatterplots + Alpha Blending}
+<<tidy = FALSE, fig.height = 4, fig.width = 4, out.height='2.5in', out.width='2.5in', message=FALSE, warning=FALSE>>=
+ggplot(data = oly12, mapping = aes(x = Height, y = Weight)) +
+ geom_point(alpha = 0.3)
+@
+\end{frame}
+
+% --------------------------------------------------- Slide --
+\begin{frame}[fragile]{Scatterplots + Smoother}
+<<tidy = FALSE, fig.height = 4, fig.width = 4, out.height='2.5in', out.width='2.5in', message=FALSE, warning=FALSE>>=
+ggplot(data = oly12, mapping = aes(x = Height, y = Weight)) +
+ geom_point(alpha = 0.3) +
+ geom_smooth()
+@
+\end{frame}
+
+% --------------------------------------------------- Slide --
+\begin{frame}[fragile]{Scatterplots with extra variables}
+
+<<tidy = FALSE, fig.height = 4, fig.width = 4, out.height='2.5in', out.width='2.75in', message=FALSE, warning=FALSE, size = 'footnotesize'>>=
+library(viridis)
+ggplot(data = oly12, mapping = aes(x = Height, y = Weight, color = Sex)) +
+  geom_point(alpha = 0.3) +
+  scale_color_viridis(discrete = TRUE)
+@
+
+\end{frame}
+
+
+% --------------------------------------------------- Slide --
+\begin{frame}[fragile]{Side-by-side boxplots}
+
+
+<<tidy = FALSE,  fig.height = 5, fig.width = 5, out.height='2.5in', out.width='2.5in', message=FALSE, size = 'scriptsize'>>=
+ggplot(data = oly12, mapping = aes(x = Sport, y = Age)) +
+  geom_boxplot() +
+  coord_flip()
+@
+
+\end{frame}
+
+% --------------------------------------------------- Slide --
+\begin{frame}[fragile]{Side-by-side boxplots}
+
+<<tidy = FALSE,  fig.height = 6, fig.width = 6, out.height='2.75in', out.width='2.75in', message=FALSE, size = 'scriptsize', warning=FALSE>>=
+ggplot(data = oly12, mapping = aes(x = reorder(Sport, Age, median), y = Age)) +
+  geom_boxplot() +
+  coord_flip() +
+  labs(x = "Sport")
+@
+
+\end{frame}
+
+% --------------------------------------------------- Slide --
+\begin{frame}[fragile]{Facetting}
+
+<<tidy = FALSE,  fig.height = 6, fig.width = 6, out.height='2.75in', out.width='2.75in', message=FALSE, size = 'scriptsize', warning=FALSE>>=
+ggplot(data = oly12, mapping = aes(x = Height)) +
+  geom_histogram() +
+  facet_wrap(~ Sport)
+@
+
+\end{frame}
+
+% --------------------------------------------------- Slide --
+\begin{frame}[fragile]{Facetting}
+
+<<tidy = FALSE,  fig.height = 6, fig.width = 6, out.height='2.75in', out.width='2.75in', message=FALSE, size = 'scriptsize', warning=FALSE>>=
+ggplot(data = oly12, mapping = aes(x = Height, y = Weight)) +
+  geom_point(size = 1, alpha = 0.3) +
+  facet_wrap(~ Sport)
+@
+
+\end{frame}
+
+
+% ---------------------------------------------------
+% ---------------------------------------------------
+\section{Summarizing data numerically}
+
+% --------------------------------------------------- Slide --
+\begin{frame}[fragile]{Univariate summaries}
+
+A common way to summarize a variable is to extract the column from the data frame and deal with it separately.
+
+\begin{columns}
+\begin{column}{0.3\textwidth}
+<<size = 'scriptsize'>>=
+mean(oly12$Age)
+median(oly12$Age)
+sd(oly12$Age)
+@
+\end{column}
+
+\begin{column}{0.5\textwidth}
+<<size = 'scriptsize'>>=
+var(oly12$Age)
+quantile(oly12$Age, probs = c(.2, .4, .6, .8))
+@
+\end{column}
+\end{columns}
+
+
+\end{frame}
+
+
+% --------------------------------------------------- Slide --
+\begin{frame}[fragile]{Summaries by group}
+
+To obtain summaries by group we can use functionality found in the \verb|dplyr| package:
+
+<<message=FALSE>>=
+# install.packages("dplyr") # uncomment if not installed
+library(dplyr)
+@
+
+In addition to groupwise processing, \verb|dplyr| provides \alert{chaining syntax}:
+
+
+<<eval=FALSE, tidy = FALSE>>=
+# Regular (i.e. function application) syntax
+object_name <- function_name(data = data_table, arguments)
+
+# Chaining syntax
+object_name <-
+  data_table %>%
+  function_name(arguments)
+@
+
+\end{frame}
+
+% --------------------------------------------------- Slide --
+\begin{frame}[fragile]{Summaries by group}
+
+Suppose that we are interested in calculating the average age of 2012 Olympic athletes by sport:
+
+<<tidy=FALSE, size='footnotesize'>>=
+age_sport <- 
+  oly12 %>%
+  group_by(Sport) %>%
+  summarize(avgAge = mean(Age))
+
+head(age_sport)  
+@
+
+\end{frame}
+
+% --------------------------------------------------- Slide --
+\begin{frame}[fragile]{Summaries by group}
+
+We can also quickly obtain the medal count by country:
+
+<<tidy = FALSE, size = 'footnotesize'>>=
+medal_count <- 
+  oly12 %>%
+  group_by(Country) %>%
+  summarize(Gold = sum(Gold), Silver = sum(Silver), Bronze = sum(Bronze)) %>%
+  arrange(desc(Gold), desc(Silver), desc(Bronze))
+
+head(medal_count)  
+@
+
+\end{frame}
+
+% --------------------------------------------------- Slide --
+\begin{frame}[fragile]{Subsetting}
+
+What if you only want summaries for one group?
+
+\begin{itemize}
+\item Create the summaries for all of the groups and then extract the group of interest
+\item Extract data for the group of interest and then create summaries
+\end{itemize}
+
+The \verb|filter| command in the \verb|dplyr| package allows you to easily subset a data frame:
+
+<<eval=FALSE>>=
+filter(data, criteria)
+@
+
+\end{frame}
+
+% --------------------------------------------------- Slide --
+\begin{frame}[fragile]{Subsetting}
+
+<<tidy=FALSE>>=
+oly12 %>%
+  filter(Country == "United States of America") %>%
+  group_by(Sex) %>%
+  summarize(avgAge = mean(Age))
+@
+
+
+\end{frame}
+
+
+% --------------------------------------------------- Slide --
+\begin{frame}[fragile]{Subsetting}
+
+<<tidy = FALSE,  fig.height = 3, fig.width = 6, out.height='2in', out.width='3in', message=FALSE, size = 'footnotesize', warning=FALSE>>=
+oly12 %>%
+  filter(Gold > 0 | Silver > 0 | Bronze > 0) %>%
+  ggplot(mapping = aes(x = Age, group = Sex, fill = Sex)) +
+  geom_density(alpha = 0.5)
+@
+
+\end{frame}
+
+
+
+\end{document}

@@ -1,2 +1,14 @@
 
 \.DS_Store
+
+*.log
+
+*.nav
+
+*.snm
+
+*.gz
+
+*.toc
+
+*.vrb

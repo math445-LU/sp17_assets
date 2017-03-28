@@ -1,0 +1,15 @@
+\frametitle{Subsetting}
+
+\begin{knitrout}\footnotesize
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{oly12} \hlopt{%>%}
+  \hlkwd{filter}\hlstd{(Gold} \hlopt{>} \hlnum{0} \hlopt{|} \hlstd{Silver} \hlopt{>} \hlnum{0} \hlopt{|} \hlstd{Bronze} \hlopt{>} \hlnum{0}\hlstd{)} \hlopt{%>%}
+  \hlkwd{ggplot}\hlstd{(}\hlkwc{mapping} \hlstd{=} \hlkwd{aes}\hlstd{(}\hlkwc{x} \hlstd{= Age,} \hlkwc{group} \hlstd{= Sex,} \hlkwc{fill} \hlstd{= Sex))} \hlopt{+}
+  \hlkwd{geom_density}\hlstd{(}\hlkwc{alpha} \hlstd{=} \hlnum{0.5}\hlstd{)}
+\end{alltt}
+\end{kframe}
+\includegraphics[width=3in,height=2in]{figure/unnamed-chunk-21-1}
+
+\end{knitrout}
+
