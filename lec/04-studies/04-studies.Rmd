@@ -13,7 +13,9 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Study 1
 
-Researchers reported that moderate drinking of alcohol was associated with a lower risk of dementia (Mukamal et al., 2003). Their sample consisted of 373 people with dementia and 373 people without dementia. Participants were asked how much beer, wine, or liquor they consumed. It was found that participants who consumed 1 to 6 drinks a week has lower risk of dementia than those who abstained from alcohol.
+(Chapter 1, Exercise 2)
+
+Researchers reported that moderate drinking of alcohol was associated with a lower risk of dementia (Mukamal et al., 2003). Their sample consisted of 373 people with dementia and 373 people without dementia. Participants were asked how much beer, wine, or liquor they consumed. It was found that participants who consumed 1 to 6 drinks a week have lower risk of dementia than those who abstained from alcohol.
 
 a. Was this an observational study or an experiment? \vspace{.85in}
 
@@ -21,10 +23,12 @@ b. Can the research conclude that drinking alcohol cases lower risk of dementia?
 
 ## Study 2
 
-Duke University researchers found that diets low in carbohydrates are effective in controlling blood sugar levels (Wasserman et al., 2008). Eighty-four volunteers with obesity and type-2 diabetes were randomly assigned to either a diet of less than 20 grams of carbohydrates per day or a low-glycemic, reduced calorie diet (500 calories per day). Ninety-five percent of those on the low-carbohydrate diet were able to reduce or eliminate their diabetes medications compare to 62% on the low-glycemic diet.
+(Chapter 1, Exercise 4)
+
+Duke University researchers found that diets low in carbohydrates are effective in controlling blood sugar levels (Wasserman et al., 2008). Eighty-four volunteers with obesity and type-2 diabetes were randomly assigned to either a diet of less than 20 grams of carbohydrates per day or a low-glycemic, reduced calorie diet (500 calories per day). Ninety-five percent of those on the low-carbohydrate diet were able to reduce or eliminate their diabetes medications compared to 62% on the low-glycemic diet.
 
 a. Was this an observational study or an experiment? \vspace{.85in}
 
 b. Can researchers conclude that a low-carbohydrate diet causes an improvement in type-2 diabetes? \vspace{.85in}
 
-c. Can researchers extend their results to a more general populaton? Explain.
+c. Can researchers extend their results to a more general population? Explain.
