@@ -1,5 +1,5 @@
 ---
-title: "Hypothesis Testing"
+title: "Two-Sample Permutation Tests in R"
 author: "Math 445, Spring 2017"
 output:
   html_document: default
@@ -10,17 +10,7 @@ output:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## Research Question
-
-Does beer consumption increases human attractiveness to malaria mosquitoes?
-
-### Motivation
-
-> Malaria and alcohol consumption both represent major public health problems. Alcohol consumption is rising in developing countries and, as efforts to manage malaria are expanded, understanding the links between malaria and alcohol consumption becomes crucial. Our aim was to ascertain the effect of beer consumption on human attractiveness to malaria mosquitoes in semi field conditions in Burkina Faso.
-
-### Methods
-
-> We used a Y tube-olfactometer designed to take advantage of the whole body odour (breath and skin emanations) as a stimulus to gauge human attractiveness to \emph{Anopheles gambiae} (the primary African malaria vector) before and after volunteers consumed either beer ($n=25$ volunteers and a total of 2500 mosquitoes tested) or water ($n=18$ volunteers and a total of 1800 mosquitoes).
+![](perm-test-ex1.png)
 
 ## Results
 
@@ -47,12 +37,18 @@ trt_means
 ```
 
 
-**Key question:** Are the treatment groups really different or are the differences due to random chance?
+### Key question: 
 
-## Permutation test
+Are the treatment groups really different or are the differences due to random chance?
 
+
+
+## Permutation test in R
+
+I assume that you already have the data loaded along with `dplyr` and `ggplot2`...
+
+#### Calculating the observed difference in means
 ```{r}
-# Calculating the observed differences
 trt_means <- 
   mosquitoes %>%
   group_by(treatment) %>%
@@ -61,48 +57,62 @@ trt_means
 
 observed <- diff(trt_means$avg)
 observed
+```
 
-#' ### Option 1: Using a for loop to run the permutations
-#' Running the permutations
+
+### Option 1: Using a for loop to run the permutations
+```{r}
 N <- 10^5 - 1
 result <- numeric(N)
 for(i in 1:N) {
   index <- sample(nrow(mosquitoes), size = 25, replace = FALSE)
   result[i] <- mean(mosquitoes$count[index]) - mean(mosquitoes$count[-index])
 }
+```
 
-# Plotting the null dsn
+#### Plotting the null dsn
+```{r fig.height = 3, fig.width = 5, message=FALSE}
 null_dsn <- data.frame(stat = result)
 ggplot(data = null_dsn) + 
   geom_histogram(mapping = aes(x = stat)) + 
   geom_vline(xintercept = observed)
+```
 
-# Calculating the p-value
-(sum(result >= observed) + 1) / (N + 1)
+#### Calculating the p-value
+```{r}
+(sum(result <= observed) + 1) / (N + 1)
+```
 
 
-
-#' ### Option 2: Using replicate to run the permutations
+### Option 2: Using replicate to run the permutations
+```{r}
 N <- 10^5 - 1
+```
 
-#' Writing a function that runs the permutations
+#### Writing a function that runs the permutations
+```{r}
 permute <- function(values, ngrp1) {
   index <- sample(length(values), size = ngrp1, replace = FALSE)
   stat <- mean(values[index]) - mean(values[-index])
   return(stat)
 }
+```
 
-#' Running the permutations
+#### Running the permutations
+```{r}
 result <- replicate(N, permute(values = mosquitoes$count, ngrp1 = 25))
+```
 
-#' Plotting the null dsn
+#### Plotting the null dsn
+```{r fig.height = 3, fig.width = 5, message=FALSE}
 null_dsn <- data.frame(stat = result)
 ggplot(data = null_dsn) + 
   geom_histogram(mapping = aes(x = stat)) + 
   geom_vline(xintercept = observed)
+```
 
-#' Calculating the p-value
-(sum(result >= observed) + 1) / (N + 1)
-
+#### Calculating the p-value
+```{r}
+(sum(result <= observed) + 1) / (N + 1)
 ```
 
