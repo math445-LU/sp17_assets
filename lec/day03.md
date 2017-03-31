@@ -1,4 +1,4 @@
-## Wednesday, March 29
+## Friday, March 31
 
-* [Two-sample permutation test example](https://github.com/math445-LU/sp17_assets/blob/master/lec/03-eda2/03-EDA2.pdf)
-* [Experiment vs. Observational study examples](https://github.com/math445-LU/sp17_assets/blob/master/lec/04-studies/04-studies.pdf)
+* [Two-sample permutation test example](https://github.com/math445-LU/sp17_assets/blob/master/lec/05-htesting1/perm-test1.pdf)
+* [mosquitoes_beer.csv](https://raw.githubusercontent.com/math445-LU/sp17_assets/master/data/mosquitoes_beer.csv)
