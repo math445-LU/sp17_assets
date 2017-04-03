@@ -1,0 +1,116 @@
+\documentclass{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{parskip}
+
+\begin{document}
+
+{\Large \bf Warm-up Exercise}
+
+April 3, 2017
+
+\bigskip
+
+Student-to-faculty ratio data collected from random samples of public and private four-year colleges:
+
+\begin{minipage}[c]{0.4\textwidth}
+\begin{center}
+\begin{tabular}{lrrr}
+  \hline
+type & mean & SD & n \\ 
+  \hline
+private & 13.84 & 7.28 &  85 \\ 
+  public & 17.60 & 4.57 &  57 \\ 
+   \hline
+\end{tabular}
+\end{center}
+\end{minipage}
+\begin{minipage}[c]{0.6\textwidth}
+\begin{center}
+% \includegraphics[width=0.8\textwidth]{ratio/ratio_box.pdf}
+
+<<set-up, include=FALSE>>=
+options(width = 150)
+@
+
+
+<<echo=FALSE, fig.height=2, fig.width=5>>=
+# load data ---------------------------------------------------------
+d = read.csv("teach_stu_rat.csv")
+
+# format data -------------------------------------------------------
+# round student-faculty ratio
+# relabel public / private
+
+d$rat = round(d$studentfacultyratio, 2)
+d$type[d$Private == 1] = "private"
+d$type[d$Private == 0] = "public"
+d$type = factor(d$type, levels = c("private", "public"))
+
+# overlayed density plots -------------------------------------------
+library(ggplot2)
+library(viridis)
+ggplot(data = d, aes(x = rat, fill = factor(type))) +
+  geom_density(alpha = 0.5) +
+  xlab("Student to faculty ratio") +
+  scale_fill_viridis("School type", discrete = TRUE) +
+  theme_minimal()
+@
+\end{center}
+\end{minipage}
+
+
+\begin{enumerate}
+
+\item We would like to test if there is a \emph{difference} between the average student-to-faculty ratio between public and private four-year colleges using a randomization test. What are the hypotheses?
+
+\vspace{.5in}
+
+\item How is the reference distribution (i.e. the permutation distribution) created?
+
+\vspace{1in}
+
+% \item Fill in the blanks below for the appropriate set up for this test:
+% 
+% \begin{doublespace}
+% We write the student-to-faculty ratio of each public and private college in this sample on a total of \rule{2cm}{0.5pt} index cards. Then, we shuffle these cards and split them into two groups: one group of size \rule{2cm}{0.5pt} representing public colleges, and another group of size \rule{2cm}{0.5pt} representing private colleges. We calculate the difference between the average student-to-faculty ratios in the public and private colleges ($\bar{x}_{public} - \bar{x}_{private}$) and record this value. We repeat this many times to build a randomization distribution, which should be centered at \rule{2cm}{0.5pt} . Lastly, we calculate the p-value as the proportion of simulations where the simulated differences in means are \rule{5cm}{0.5pt}.
+% \end{doublespace}
+
+
+\item The histogram below is created using 9,999 resamples. What is the p-value? To help you answer this the smallest and largest 10 differences in means are displayed below.
+
+% \begin{center}
+% \includegraphics[width=0.8\textwidth]{ratio/rand_dist_dot.pdf}
+% \end{center}
+
+<<echo=FALSE, fig.height = 2, fig.width=5>>=
+library(resample)
+perm <- permutationTest2(data = d$rat, statistic = mean, treatment = d$type)
+
+res <- as.data.frame(perm$replicates)
+colnames(res) <- "stats"
+
+ggplot(data = res, aes(x = stats)) +
+  geom_histogram(bins = 60) +
+  xlab("diff. in means") +
+  ggtitle("Distribution of simulated differences (private - public)")
+@
+
+<<echo=FALSE, size='scriptsize'>>=
+smallest <- head(sort(res$stats), 10)
+largest <- tail(sort(res$stats), 10)
+
+t(data.frame(smallest, largest))
+@
+
+
+\vspace{.25in}
+
+
+\item Based on the p-value, do these data provide convincing evidence to suggest that the student-to-faculty ratio in public four-year colleges is different than that of private four-year colleges.
+
+
+\end{enumerate}
+
+
+\end{document}
