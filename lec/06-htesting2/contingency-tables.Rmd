@@ -2,10 +2,10 @@
 title: "Contingency Tables"
 author: "Math 445, Spring 2017"
 output:
-  html_document: default
   pdf_document:
     fig_height: 3
     fig_width: 5
+  html_document: default
 ---
 
 ## A Permutation test for independence of two variables
