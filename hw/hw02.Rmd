@@ -1,0 +1,58 @@
+---
+title: "Homework 2"
+author: "Math 445, Spring 2017"
+date: "Due Wednesday, April 12 by 4:30 p.m."
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Instructions
+
+- If you need to review concepts from probability, Appendix A is a good place to start.
+
+- Please complete problems that require the use of R in R markdown. Theoretical problems may be handwritten. Please knit your .Rmd file to either Word or PDF and print it for submission with the remainder of the problems.
+
+- All assignments should be stapled.
+
+- Remember that the textbook data sets are contained in the `resampledata` R package. 
+
+- When completing a hypothesis test, be sure to outline all of the steps in your solution.
+
+## Assignment
+
+Complete the following exercises from **Chapter 3** of the textbook:
+
+**Exercise 4**
+
+- Hint: Proportions can be thought of as the mean of a binary variable, and in R, `TRUE` and `FALSE` map to 1 and 0, respectively; thus, you can find a proportion by using code of the form:
+
+    `mean(variable >= "condition")` (you need to substitute in the name of the variable and the condition). You can substitute other logical operators in for `>=` as necessary (run `?Comparison` in the console for details).
+
+**Exercise 5**
+
+- For this problem you should only write **one `for` loop** inside which you calculate three statistics. This will require that you initialize three result vectors.
+- This problem is illustrating what Theorem 3.1 establishes.
+
+**Exercise 12**
+
+**Exercise 16**
+
+**Exercise 19**
+
+**Exercise 20**
+
+**Exercise 22**
+
+- This is one of the rare times that I recommend you count values by hand to reinforce the concept.
+
+
+**Exercise 26**
+
+- This problem will help you review a bit of probability theory and make connections from Math 240 to this course.
+
+**Exercise 28**
+
+- The variance of the p-value is of interest as it can be used to understand how much our simulated p-values will vary from simulation to simulation.
