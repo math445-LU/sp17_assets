@@ -1,0 +1,13 @@
+---
+title: "Testing Independence vs. Testing Homogeneity"
+author: "Math 445, Spring 2017"
+date: ""
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
