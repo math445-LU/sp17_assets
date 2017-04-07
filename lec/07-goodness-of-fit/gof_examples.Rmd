@@ -1,0 +1,16 @@
+---
+title: "Goodness-of-Fit Tests"
+author: "Math 445, Spring 2017"
+date: ""
+output:
+  pdf_document: default
+  html_document: default
+---
+
+\pagenumbering{gobble}
+
+
+## Example with an estimated parameter
+
+In 1898, Ladislaus Bortkiewicz studied the distribution of soldier deaths by horse kicks in the Prussian Cavalry. Over 20 years, there were 122 deaths in 10 Prussian army corps. He divided the data into $20\times 10=200$ corps-years and modeled the number of deaths using a Poisson($122/200=.61$) distribution. Does this model fit the data?
+

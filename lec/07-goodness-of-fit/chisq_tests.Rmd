@@ -7,7 +7,43 @@ output:
   html_document: default
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
+\pagenumbering{gobble}
 
+## Study 1
+
+(Chapter 3, Exercise 13)
+
+The California Department of Game and Fish published a report on a study of jack mackerel fish from three different regions off the waters of California: near Guadalupe Island and Cedros Island off Baja California, and near San Clemente Island in southern California (Gregory and Tasto, 1976). One characteristic of the fish that they were interested in was the number of rays on the second dorsal fin; in particular, is the number of rays different for fish from the different regions?
+
+
+Habitat | $\ge$ 36 | 35 | 34 | 33 | 32 | $\le$ 31
+--------|----:|----:|----:|----:|----:|----:
+Guadalupe Island    | 14 | 30 | 42 | 78 | 33 | 14
+Cedros Island       | 11 | 28 | 53 | 66 | 27 | 9
+San Clemente Island | 10 | 17 | 61 | 53 | 22 | 10
+
+(a) Does this setting call for a test of independence of a test of homogeneity? Why?
+
+\vspace{.5in}
+
+(b) Write down the appropriate hypothesis for the test you specified in part (a).
+
+\vspace{.5in}
+
+
+## Study 2
+
+(Chapter 3, Exercise 14)
+
+A researcher in Hong Kong conducted a study on children's perception of advertising brands on television (Chan, 2008). For one part of the study, she analyzed surveys sent to 1481 children from rural areas of Mainland China and received responses from 726 boys and 755 girls. The responses to the question about their feeling toward TV ads are summarized below:
+
+Sex   | Like very much | Like | Neither | Dislike | Dislike very much
+------|----|----|----|----|----
+Boys  | 180 | 260 | 137 | 96 | 52
+Girls | 210 | 266 | 145 | 85 | 49
+
+(a) Does this setting call for a test of independence of a test of homogeneity? Why?
+
+\vspace{.5in}
+
+(b) Write down the appropriate hypothesis for the test you specified in part (a).
