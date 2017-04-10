@@ -1,0 +1,52 @@
+---
+title: "The Central Limit Theorem"
+author: "Math 445, Spring 2017"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Example 1: $\chi^2_{5}$ distribution
+
+Let $X_1, X_2, \ldots, X_n \overset{iid}{\sim} \chi^2_3$. Below is an illustration of the CLT.
+
+```{r echo=FALSE, fig.width=5, fig.height=7}
+chisq_dsn <- data.frame(n10 = apply(replicate(n = 10000, rchisq(n = 10, df = 3)), 2, mean),
+                        n20 = apply(replicate(n = 10000, rchisq(n = 20, df = 3)), 2, mean),
+                        n40 = apply(replicate(n = 10000, rchisq(n = 40, df = 3)), 2, mean),
+                        n80 = apply(replicate(n = 10000, rchisq(n = 80, df = 3)), 2, mean))
+
+library(tidyr)
+chisq_tidy <- gather(chisq_dsn, key = n, value = means)
+
+library(ggplot2)
+ggplot(data = chisq_tidy, aes(x = means)) +
+  geom_histogram(bins = 50) +
+  facet_wrap(~n, ncol = 1, scales = "free_y")
+```
+
+
+## Example 2: Binomial(n = 10, p = 0.75)
+
+Let $X_1, X_2, \ldots, X_n \overset{iid}{\sim} \text{Bin}(10, 0.75)$. Below is an illustration of the CLT.
+
+
+```{r echo=FALSE, fig.width=5, fig.height=7}
+binom_dsn <- data.frame(n10 = apply(replicate(n = 10000, rbinom(n = 10, size = 10, p = 0.75)), 2, mean),
+                        n20 = apply(replicate(n = 10000, rbinom(n = 20, size = 10, p = 0.75)), 2, mean),
+                        n40 = apply(replicate(n = 10000, rbinom(n = 40, size = 10, p = 0.75)), 2, mean),
+                        n80 = apply(replicate(n = 10000, rbinom(n = 80, size = 10, p = 0.75)), 2, mean))
+
+library(tidyr)
+binom_tidy <- gather(binom_dsn, key = n, value = means)
+
+library(ggplot2)
+ggplot(data = binom_tidy, aes(x = means)) +
+  geom_histogram(bins = 50) +
+  facet_wrap(~n, ncol = 1, scales = "free_y")
+```
+

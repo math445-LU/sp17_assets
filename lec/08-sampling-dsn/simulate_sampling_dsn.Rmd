@@ -1,0 +1,65 @@
+---
+title: "Simulating the Sampling Distribution"
+author: "Math 445, Spring 2017"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Example
+
+Let $T = \text{median} \{X_1, X_2, \ldots, X_{10} \}$ where $X_i \overset{iid}{\sim} \text{Beta}(5,2)$. The $\text{Beta}(5,2)$ PDF is displayed below.
+
+```{r echo = FALSE, fig.width=4, fig.height=2.5}
+library(ggplot2)
+x <- seq(0, 1, len = 1000)
+qplot(x, geom = "blank") +
+  stat_function(aes(x = x, y = ..y..), fun = dbeta, colour="blue", n = 1000, args = list(shape1 = 5, shape2 = 2)) +
+  ylab("f(x)") +
+  ggtitle("Beta(5,2) Density")
+```
+
+
+
+
+We can use the following code to simulate the sampling distribution of $T$.
+
+```{r message = FALSE, fig.height=2.5, fig.width=4}
+set.seed(492017)
+draws <- replicate(n = 10000, rbeta(n= 10, shape1 = 5, shape2 = 2))
+dim(draws)
+
+medians <- apply(draws, 2, median)
+
+library(ggplot2)
+median_df <- data.frame(medians = medians)
+ggplot(median_df, aes(x = medians, y = ..density..)) +
+  geom_histogram() +
+  geom_density(color = "darkorange") +
+  ggtitle("Simulated medians from Beta(5,2)")
+```
+
+Using simulation we can easily approximate the standard error
+
+```{r}
+sd(medians)
+```
+
+and the probability of an event
+
+```{r}
+mean(medians <= 0.6)
+```
+
+## Simulating from other distributions
+
+You can use the above code as a template for simulating the sampling distribution of other statistics or distributions. If you wish to simulate from other distributions, then you will need to understand how the specify the parameters of that PDF. Run the following command for a list of distributions available in R:
+
+```{r eval=FALSE}
+?Distributions
+```
+
