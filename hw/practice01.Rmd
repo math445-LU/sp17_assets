@@ -1,0 +1,23 @@
+---
+title: "Chapter 4 Practice Problems"
+author: "Math 445, Spring 2017"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+I will not be able to grade and return another homework prior to the first exam, but I highly recommend that complete the following problems from chapter 4 prior to the exam.
+
+**Exercise 9**
+
+**Exercise 10**
+
+**Exercise 13a**
+
+**Exercise 20** (Hint: Start with the CDF of $X_{min}$ and $X_{max}$, then go to the PDF.)
+
+**Exercise 23**
+
+**Exercise 25**
