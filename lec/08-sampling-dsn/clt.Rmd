@@ -2,8 +2,8 @@
 title: "The Central Limit Theorem"
 author: "Math 445, Spring 2017"
 output:
-  pdf_document: default
   html_document: default
+  pdf_document: default
 ---
 
 ```{r setup, include=FALSE}
