@@ -2,10 +2,10 @@
 title: "The One-Sample Bootstrap"
 author: "Math 445, Spring 2017"
 output:
+  html_document: default
   pdf_document:
     fig_height: 2.5
     fig_width: 5
-  html_document: default
 ---
 
 ```{r load packages, include=FALSE}
