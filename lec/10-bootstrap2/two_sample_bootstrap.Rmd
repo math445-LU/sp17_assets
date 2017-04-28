@@ -2,10 +2,10 @@
 title: "The Two-Sample Bootstrap"
 author: "Math 445, Spring 2017"
 output:
+  html_document: default
   pdf_document:
     fig_height: 2.5
     fig_width: 5
-  html_document: default
 ---
 
 ```{r load packages, include=FALSE}
@@ -40,7 +40,7 @@ Suppose further that you are only interested in houses with either no fireplace 
 
 ```{r message=FALSE}
 library(dplyr)
-sub_housing <- filter(housing, Fireplaces <= 1)
+sub_housing <- filter(housing, Fireplaces < 1)
 
 # Quick summary stats
 price_stats <- 
