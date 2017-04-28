@@ -1,0 +1,51 @@
+---
+title: "Homework 4"
+author: "Math 445, Spring 2017"
+date: "Due Wednesday, May 3 by 4:30 p.m."
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Instructions
+
+- Please complete problems that require the use of R in R markdown. Theoretical problems may be handwritten. **Please knit your .Rmd file to either Word or PDF and print it for submission** with the remainder of the problems.
+
+- All assignments should be stapled.
+
+- Remember that the textbook data sets are contained in the `resampledata` R package. 
+
+- When completing a hypothesis test, be sure to outline all of the steps in your solution.
+
+## Assignment
+
+Complete the following exercises from **Chapter 6** of the textbook. 
+
+**Exercise 11**
+
+**Exercise 16**
+
+*Notes on part b:* If you use R to run the goodness-of-fit test, include the results (the value of the test statistic and associated p-value) and the R code used in your solution.
+
+*Notes on part c:* To superimpose the Gamma($r$, $\lambda$) PDF on a histogram (remember to change the scale of the y-axis to the density scale!), use the below layer:
+
+```{r eval=FALSE}
+stat_function(fun = dgamma, geom = "line", args = list(shape = r, rate = lambda))
+```
+
+where `r` and `lambda` are the estimates of $r$ and $\lambda$, respectively.
+
+To superimpose the Gamma($r$, $\lambda$) CDF on a plot of the ECDF, use the below layer:
+
+```{r eval=FALSE}
+stat_function(fun = pgamma, geom = "line", args = list(shape = r, rate = lambda))
+```
+
+
+You can also experiment with the  `color` and `linetype` arguments to make your plots easier to read.
+
+**Exercise 19**
+
+**Exercise 29**

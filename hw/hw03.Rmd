@@ -1,0 +1,42 @@
+---
+title: "Homework 3"
+author: "Math 445, Spring 2017"
+date: "Due Wednesday, April 26 by 4:30 p.m."
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Instructions
+
+- Please complete problems that require the use of R in R markdown. Theoretical problems may be handwritten. **Please knit your .Rmd file to either Word or PDF and print it for submission** with the remainder of the problems.
+
+- All assignments should be stapled.
+
+- Remember that the textbook data sets are contained in the `resampledata` R package. 
+
+- When completing a hypothesis test, be sure to outline all of the steps in your solution.
+
+## Assignment
+
+Complete the following exercises from **Chapter 5** of the textbook. 
+
+> "For all exercises that ask you to perform exploratory data analysis (EDA), you should plot the data, describe the shape of the distribution (bell-shaped, symmetric, skewed, etc.), and provide summary statistics (mean, standard deviation). For bootstrapping questions, always provide plots and describe the shape, spread, and bias of the distribution." (Chihara and Hesterberg, 2011)
+
+**Exercise 8**
+
+Correction: Part (a) should read:
+
+> "Use simulation (with n = 200) to generate an approximate sampling distribution of the mean; plot and describe the distribution."
+
+**Exercise 9**
+
+**Exercise 10**
+
+**Exercise 11**
+
+**Exercise 12**
+
+**Exercise 17**
