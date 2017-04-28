@@ -1,0 +1,83 @@
+---
+title: "Numeric ML estimate in R"
+author: "Math 445, Spring 2017"
+output: html_document
+---
+
+This R markdown file provides my code for the Boston Storm example of using `optim` to find ML estimates in R for the gamma distribution using `optim`.
+
+### Loading our usual packages and the data
+
+```{r}
+library(ggplot2)
+storm <- read.csv("BostonStorms2013.csv")
+```
+
+### Plotting the distribution of precipitation
+
+```{r}
+ggplot(data = storm, mapping = aes(x = precip)) + 
+  geom_histogram(colour = "gray20")
+
+ggplot(data = storm, mapping = aes(x = precip)) + 
+  geom_density()
+```
+
+
+### Calculating the MoM estimates
+
+```{r}
+n <- length(storm$precip) 
+xbar <- mean(storm$precip) 
+s2 <- var(storm$precip) 
+sigma2_hat <- s2 * (n - 1) / n 
+
+lambda_mom <- xbar / sigma2_hat; lambda_mom
+alpha_mom <- xbar^2 / sigma2_hat; alpha_mom
+```
+
+
+### Writing the log-likelihood function
+
+```{r}
+gamma_loglik <- function(theta, x) {
+  n <- length(x)
+  alpha <- theta[1]
+  lambda <- theta[2]
+  RES <- n * (alpha * log(lambda) - log(gamma(alpha)) + 
+                (alpha - 1) * mean(log(x)) - lambda * mean(x)) 
+  return(RES)
+}
+```
+
+
+### Using optim to maximize the log-likelihood
+
+```{r}
+theta <- optim(par = c(alpha_mom, lambda_mom), fn = gamma_loglik, 
+               control = list(fnscale = -1), x = storm$precip)
+theta
+```
+
+
+### Alternative way to write the log-likelihood (RECOMMENDED)
+
+When possible, use the built in mass/density functions for your log likelihoods!
+
+```{r}
+gamma_loglik_alt <- function(theta, x) {
+  sum(dgamma(x, shape = theta[1], rate = theta[2], log = TRUE))
+}
+```
+
+
+### Using optim to maximize the log-likelihood
+
+The results are the same here.
+
+```{r}
+theta2 <- optim(par = c(alpha_mom, lambda_mom), fn = gamma_loglik_alt, 
+                control = list(fnscale = -1), x = storm$precip)
+theta2
+```
+
