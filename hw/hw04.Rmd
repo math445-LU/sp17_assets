@@ -23,6 +23,8 @@ knitr::opts_chunk$set(echo = TRUE)
 
 Complete the following exercises from **Chapter 6** of the textbook. 
 
+**Exercise 6**
+
 **Exercise 11**
 
 **Exercise 16**
@@ -46,6 +48,30 @@ stat_function(fun = pgamma, geom = "line", args = list(shape = r, rate = lambda)
 
 You can also experiment with the  `color` and `linetype` arguments to make your plots easier to read.
 
+
 **Exercise 19**
 
-**Exercise 29**
+**Exercise 23**
+
+In addition to the textbook problems, complete the following problem:
+
+**Problem: Text messages**
+
+The number of text messages sent per day by students at Lawrence is thought to follow a log-normal distribution. Let $X_1, X_2, \ldots, X_n$ be a random sample from LogNorm($\mu$, $\sigma^2$). The PDF of $X_i$ is given by
+
+$$f(x_i | \mu, \sigma^2) = \dfrac{1}{x\sqrt{2\pi \sigma^2}} \exp \left( \dfrac{-\left[ \log(x) - \mu \right]^2}{2 \sigma^2} \right), \quad x>0, \quad \mu \in \mathbb{R}, \quad \sigma > 0$$
+
+Note: $\exp{x} = e^x$.
+
+(a) Let $Y\sim \mathcal{N}(\mu,\ \sigma^2)$. Define $X=e^Y$. Show that $X \sim \text{LogNorm}(\mu,\ \sigma^2)$.
+(b) Calculate the mean of $X$. (\emph{Hint:} this can be found directly using the PDF, or by exploiting it's relationship with the normal distribution via the MGF.)
+(c) Calculate the variance of $X$. (\emph{Hint:} this can be found directly using the PDF, or by exploiting it's relationship with the normal distribution via the MGF.)
+(d) Find the method of moments estimators for $\mu$ and $\sigma^2$ by hand.
+(e) What is the likelihood function for $\mu$ and $\sigma^2$?
+(f) What is the log-likelihood function for $\mu$ and $\sigma^2$?
+(g) Find the maximum likelihood estimators of $\mu$ and $\sigma^2$ by hand.
+(h) Write a function in R called `lognorm_loglik` that computes the log-likelihood for a lognormal distribution. Include the code in your solution.
+(i) The data set `stat111texts.csv` contains a variable, `texts`, which measures the typical number of text messages sent per day for a college student a certain prestigious university with a statistics department. In R, read in the data set, and calculate the mean, variance, and number of observations for the variable texts. Include both the code and output in your solution.
+(j) Define a new variable called $\text{logtexts} = \log{\text{texts}}$. Calculate the mean and variance of logtexts. Include both the code and output in your solution.
+(k) Use your results from (i) and (j) to calculate the ML estimates for $\mu$ and $\sigma^2$.
+(l) Use the `optim` function in R to calculate the maximum likelihood estimates of $\mu$ and $\sigma^2$. Do they agree with your previous calculations? If not, consider different starting values.
