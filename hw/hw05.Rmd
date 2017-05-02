@@ -1,0 +1,34 @@
+---
+title: "Homework 5"
+author: "Math 445, Spring 2017"
+date: "Due Friday, May 12 by 4:30 p.m."
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Instructions
+
+- Please complete problems that require the use of R in R markdown. Theoretical problems may be handwritten. **Please knit your .Rmd file to either Word or PDF and print it for submission** with the remainder of the problems.
+
+- All assignments should be stapled.
+
+- Remember that the textbook data sets are contained in the `resampledata` R package. 
+
+- When completing a hypothesis test, be sure to outline all of the steps in your solution.
+
+## Assignment
+
+Complete the following exercises from **Chapter 6** of the textbook. 
+
+**Exercise 27**
+
+**Exercise 29**
+
+**Exercise 34**
+
+**Exercise 41**
+
+CRLB PROBLEM(S)...
