@@ -11,13 +11,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Instructions
 
-- Please complete problems that require the use of R in R markdown. Theoretical problems may be handwritten. **Please knit your .Rmd file to either Word or PDF and print it for submission** with the remainder of the problems.
-
 - All assignments should be stapled.
-
-- Remember that the textbook data sets are contained in the `resampledata` R package. 
-
-- When completing a hypothesis test, be sure to outline all of the steps in your solution.
 
 ## Assignment
 
@@ -31,4 +25,13 @@ Complete the following exercises from **Chapter 6** of the textbook.
 
 **Exercise 41**
 
-CRLB PROBLEM(S)...
+\bigskip
+
+In addition to the textbook problems, complete the following problem:
+
+**Problem 5**
+
+Suppose that $X_1, \ldots, X_n$ form a random sample from the Bernoulli distribution with unknown probability of success $p$.
+
+(a) Find the maximum likelihood estimate of $p$.
+(b) Show that the estimate you found in part (a) attains the Cramer-Rao lower bound.
