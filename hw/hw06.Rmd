@@ -15,7 +15,6 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Assignment
 
-Complete the following exercises from **Chapter 7** of the textbook. 
 
 **Problem 1**
 
