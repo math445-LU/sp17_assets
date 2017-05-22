@@ -20,13 +20,13 @@ knitr::opts_chunk$set(echo = TRUE)
 
 Suppose that $X_1,\ldots , X_n$ form a random sample from the normal distribution with unknown mean $\mu$ and unknown variance $\sigma^2$.
 
-(a) What distribution does $\dfrac{\sum_{i=1}^n (X_i - \overline{X})}{\sigma^2}$ have?
+(a) What distribution does $\dfrac{\sum_{i=1}^n (X_i - \overline{X})^2}{\sigma^2}$ have?
 
-(b) Why is $\dfrac{\sum_{i=1}^n (X_i - \overline{X})}{\sigma^2}$ a pivotal quantity?
+(b) Why is $\dfrac{\sum_{i=1}^n (X_i - \overline{X})^2}{\sigma^2}$ a pivotal quantity?
 
 (c) Describe a method for constructing a confidence interval for $\sigma^2$ with a specified confidence level $1-\alpha$. Hint: Determine constants $c_1$ and $c_2$ such that
 
-$$P\left( c_1 < \dfrac{\sum_{i=1}^n (X_i - \overline{X})}{\sigma^2} < c_2 \right) = 1 - \alpha$$
+$$P\left( c_1 < \dfrac{\sum_{i=1}^n (X_i - \overline{X})^2}{\sigma^2} < c_2 \right) = 1 - \alpha$$
 
 
 **Problem 2**
